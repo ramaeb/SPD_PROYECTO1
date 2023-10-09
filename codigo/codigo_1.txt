@@ -1,0 +1,186 @@
+// C++ code
+//RAMIRO BIANUCCI GERMAN CANOSA
+// PARTE 1
+//DISPLAY SIETE SEGMENTOS SUMA RESTA Y PUESTA A CERO
+int cont = 0;
+int lectura_pul_suma = 0;
+int lectura_pul_resta = 0;
+int lectura_pul_reset = 0;
+#define PULSADOR_SUMA A0
+#define PULSADOR_RESTA A1
+#define PULSADOR_RESET A2
+#define G 8
+#define F 9
+#define A 10
+#define B 12
+#define E 7
+#define D 6
+#define C 5
+//Recibe contador y mediante un switch prende y apaga las salidas
+//necesarias para mostrar en pantalla el numero de contador recibido
+int contador(int cont){
+  digitalWrite(A,LOW);
+  digitalWrite(B,LOW);
+  digitalWrite(C,LOW);
+  digitalWrite(D,LOW);
+  digitalWrite(E,LOW);
+  digitalWrite(F,LOW);
+
+  switch(cont) {
+  case 0:
+     	digitalWrite(A,HIGH);
+     	digitalWrite(B,HIGH);
+     	digitalWrite(C,HIGH);
+     	digitalWrite(D,HIGH);
+     	digitalWrite(E,HIGH);
+     	digitalWrite(F,HIGH);
+     	digitalWrite(G,LOW);
+     break;
+   case 1:
+     	digitalWrite(A,LOW);
+     	digitalWrite(B,HIGH);
+     	digitalWrite(C,HIGH);
+     	digitalWrite(D,LOW);
+     	digitalWrite(E,LOW);
+     	digitalWrite(F,LOW);
+     	digitalWrite(G,LOW);
+     break; 
+   case 2:
+     digitalWrite(A,HIGH);
+     digitalWrite(B,HIGH);
+     digitalWrite(C,LOW);
+     digitalWrite(D,HIGH);
+     digitalWrite(E,HIGH);
+     digitalWrite(F,LOW);
+     digitalWrite(G,HIGH);
+     break;
+   case 3:
+     digitalWrite(A,HIGH);
+     digitalWrite(B,HIGH);
+     digitalWrite(C,HIGH);
+     digitalWrite(D,HIGH);
+     digitalWrite(E,LOW);
+     digitalWrite(F,LOW);
+     digitalWrite(G,HIGH);
+     break;
+   case 4:
+     digitalWrite(A,LOW);
+     digitalWrite(B,HIGH);
+     digitalWrite(C,HIGH);
+     digitalWrite(D,LOW);
+     digitalWrite(E,LOW);
+     digitalWrite(F,HIGH);
+     digitalWrite(G,HIGH);
+     break;
+   case 5:
+     digitalWrite(A,HIGH);
+     digitalWrite(B,LOW);
+     digitalWrite(C,HIGH);
+     digitalWrite(D,HIGH);
+     digitalWrite(E,LOW);
+     digitalWrite(F,HIGH);
+     digitalWrite(G,HIGH);
+     break;
+   case 6:
+     digitalWrite(A,HIGH);
+     digitalWrite(B,LOW);
+     digitalWrite(C,HIGH);
+     digitalWrite(D,HIGH);
+     digitalWrite(E,HIGH);
+     digitalWrite(F,HIGH);
+     digitalWrite(G,HIGH);
+     break;
+   case 7:
+     digitalWrite(A,HIGH);
+     digitalWrite(B,HIGH);
+     digitalWrite(C,HIGH);
+     digitalWrite(D,LOW);
+     digitalWrite(E,LOW);
+     digitalWrite(F,LOW);
+     digitalWrite(G,LOW);
+     break;
+   case 8:
+     digitalWrite(A,HIGH);
+     digitalWrite(B,HIGH);
+     digitalWrite(C,HIGH);
+     digitalWrite(D,HIGH);
+     digitalWrite(E,HIGH);
+     digitalWrite(F,HIGH);
+     digitalWrite(G,HIGH);
+     break;
+   case 9:
+     digitalWrite(A,HIGH);
+     digitalWrite(B,HIGH);
+     digitalWrite(C,HIGH);
+     digitalWrite(D,LOW);
+     digitalWrite(E,LOW);
+     digitalWrite(F,HIGH);
+     digitalWrite(G,HIGH);
+     break;
+   }
+    
+ }
+  
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(G, OUTPUT);
+  pinMode(F, OUTPUT);
+  pinMode(A, OUTPUT);
+  pinMode(B, OUTPUT);
+  pinMode(E, OUTPUT);
+  pinMode(D, OUTPUT);
+  pinMode(C, OUTPUT);
+  pinMode(PULSADOR_SUMA, INPUT_PULLUP);
+  pinMode(PULSADOR_RESTA, INPUT_PULLUP);
+  pinMode(PULSADOR_RESET, INPUT_PULLUP);
+ 
+  
+}
+
+void loop()
+//Seteo de LECTURAS DE LOS PULSADORES
+{
+  lectura_pul_suma = digitalRead(PULSADOR_SUMA);
+  lectura_pul_resta = digitalRead(PULSADOR_RESTA);
+  lectura_pul_reset = digitalRead(PULSADOR_RESET);
+  //Lee EL PULSADOR DE SUMA y usa la funcion contador
+  //para mostrar en pantalla el display.
+  
+  if (lectura_pul_suma == 0){
+    
+    while(!digitalRead(PULSADOR_SUMA));//ANTI REBOTE DE SUMA
+    cont++;
+    
+    //Si la cuenta llega a más de nueve
+    //el contador vuelve a una puesta CERO.
+    if (cont > 9){
+      
+  		cont = 0;
+  	}
+    contador(cont);    
+  	delay(200);
+ 
+    
+  }
+  //Lee EL PULSADOR DE RESTA y usa la funcion contador
+  //para mostrar en pantalla el display.
+  if (lectura_pul_resta == 0){ 
+    while(!digitalRead(PULSADOR_RESTA));//ANTI REBOTE RESTA
+  	cont--;
+    if (cont < 0){
+      cont = 0;
+    }
+    contador(cont);
+    delay(200);
+  
+  }
+  //Lee EL PULSADOR PUESTA A CERO y usa la funcion contador
+  //para mostrar en pantalla el display EN CERO.
+  if (lectura_pul_reset == 0){
+  	cont = 0;
+    contador(cont);
+    delay(200);
+  
+  }
+}
