@@ -4,10 +4,13 @@ Proyecto numero 1 para SPD, usando tinkercad y arduino (C++): CONTADOR CON DOS D
 - Ramiro Bianucci
 - German Canosa
 ## Proyecto: CONTADOR CON DISPLAY DE 7 SEGMENTOS.
+![Tinkercad](./img/Screenshot_1.png)
+
 El proyecto consiste en un display que cuenta hasta el numero 9.
 El mismo tiene 3 BOTONES, SUMA, RESTA y PUESTA A CERO.
 
 Con esos tres botones usted puede realizar la cuenta hacia adelante, atras y poner el contador en el numero 0.
+
 
 ## Función principal "contador":
 Esta funcion se encarga de elegir segun el numero dado que pines prender para que el contador presente los numeros correctos.
